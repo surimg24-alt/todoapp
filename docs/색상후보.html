@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>색상 후보</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      font-family: "Inter", -apple-system, "Apple SD Gothic Neo", sans-serif;
+      background: #f4f3f1;
+      color: #25221e;
+      padding: 32px 16px 48px;
+      line-height: 1.5;
+    }
+    .page-title { font-size: 24px; letter-spacing: -0.2px; text-align: center; }
+    .page-sub { text-align: center; color: #6f6c69; font-size: 14px; margin: 8px 0 32px; }
+
+    .grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .palette {
+      background: var(--bg);
+      color: var(--text);
+      border-radius: 8px;
+      border: 1px solid #d7d6d4;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .palette h2 { font-size: 20px; letter-spacing: -0.1px; }
+    .reason { font-size: 14px; }
+
+    .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .swatch { font-size: 12px; text-align: center; }
+    .chip {
+      height: 48px;
+      border-radius: 8px;
+      border: 1px solid rgba(37, 34, 30, 0.12);
+      margin-bottom: 4px;
+    }
+    .hex { font-family: ui-monospace, Menlo, monospace; font-size: 11px; }
+
+    .label { font-size: 12px; font-weight: 600; opacity: 0.7; }
+
+    .card {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: rgba(37, 34, 30, 0.06) 0 1px 0, 0 0 0 1px rgba(37, 34, 30, 0.06);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .card-top { display: flex; align-items: center; gap: 8px; }
+    .habit { flex: 1; font-weight: 600; font-size: 16px; }
+    .streak {
+      background: var(--accent);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+    .week { display: flex; gap: 4px; }
+    .day {
+      flex: 1;
+      height: 24px;
+      border-radius: 4px;
+      background: rgba(37, 34, 30, 0.06);
+    }
+    .day.on { background: var(--main); }
+
+    .buttons { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .btn-main {
+      background: var(--main);
+      color: #ffffff;
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font: inherit;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .btn-check {
+      border: 1px solid var(--main);
+      color: var(--main);
+      background: transparent;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font: inherit;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-link {
+      background: none;
+      border: 0;
+      color: var(--text);
+      font: inherit;
+      font-weight: 500;
+      font-size: 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">습관 체크 · 브랜드 색 후보</h1>
+  <p class="page-sub">레퍼런스 스타일(따뜻한 바탕, 강조색은 아껴 쓰기, 모서리 8px)을 따른 세 가지 조합</p>
+
+  <div class="grid">
+
+    <!-- 조합 1 -->
+    <section class="palette" style="--main:#c8452b; --bg:#fefdfc; --text:#25221e; --accent:#f2a93b;">
+      <h2>1. 아침 불꽃</h2>
+      <p class="reason">연속 일수의 '불꽃'을 주황빛 주 색으로 살려, 레퍼런스의 따뜻한 미색 분위기를 가장 그대로 이어가요.</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#c8452b"></div>주 색<div class="hex">#c8452b</div></div>
+        <div class="swatch"><div class="chip" style="background:#fefdfc"></div>바탕색<div class="hex">#fefdfc</div></div>
+        <div class="swatch"><div class="chip" style="background:#25221e"></div>글자색<div class="hex">#25221e</div></div>
+        <div class="swatch"><div class="chip" style="background:#f2a93b"></div>강조색<div class="hex">#f2a93b</div></div>
+      </div>
+      <p class="label">카드 예시</p>
+      <div class="card">
+        <div class="card-top">
+          <span class="habit">운동</span>
+          <span class="streak">5일 연속</span>
+          <button class="btn-check">오늘 체크</button>
+        </div>
+        <div class="week"><span class="day on"></span><span class="day on"></span><span class="day on"></span><span class="day on"></span><span class="day on"></span><span class="day"></span><span class="day"></span></div>
+      </div>
+      <p class="label">버튼 예시</p>
+      <div class="buttons">
+        <button class="btn-main">+ 습관 추가</button>
+        <button class="btn-link">삭제</button>
+      </div>
+    </section>
+
+    <!-- 조합 2 -->
+    <section class="palette" style="--main:#2f7d4f; --bg:#fbfaf4; --text:#22261f; --accent:#e8853d;">
+      <h2>2. 새싹 정원</h2>
+      <p class="reason">습관이 매일 조금씩 자라는 느낌을 초록으로 담고, '완료=초록'이라 체크한 게 한눈에 들어와요.</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#2f7d4f"></div>주 색<div class="hex">#2f7d4f</div></div>
+        <div class="swatch"><div class="chip" style="background:#fbfaf4"></div>바탕색<div class="hex">#fbfaf4</div></div>
+        <div class="swatch"><div class="chip" style="background:#22261f"></div>글자색<div class="hex">#22261f</div></div>
+        <div class="swatch"><div class="chip" style="background:#e8853d"></div>강조색<div class="hex">#e8853d</div></div>
+      </div>
+      <p class="label">카드 예시</p>
+      <div class="card">
+        <div class="card-top">
+          <span class="habit">운동</span>
+          <span class="streak">5일 연속</span>
+          <button class="btn-check">오늘 체크</button>
+        </div>
+        <div class="week"><span class="day on"></span><span class="day on"></span><span class="day on"></span><span class="day on"></span><span class="day on"></span><span class="day"></span><span class="day"></span></div>
+      </div>
+      <p class="label">버튼 예시</p>
+      <div class="buttons">
+        <button class="btn-main">+ 습관 추가</button>
+        <button class="btn-link">삭제</button>
+      </div>
+    </section>
+
+    <!-- 조합 3 -->
+    <section class="palette" style="--main:#2563b8; --bg:#f9fbfd; --text:#1d2733; --accent:#ef6a4c;">
+      <h2>3. 맑은 물</h2>
+      <p class="reason">물 마시기처럼 상쾌하고 차분한 파랑에, 연속 기록만 산호색으로 톡 튀게 해서 집중이 잘 돼요.</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#2563b8"></div>주 색<div class="hex">#2563b8</div></div>
+        <div class="swatch"><div class="chip" style="background:#f9fbfd"></div>바탕색<div class="hex">#f9fbfd</div></div>
+        <div class="swatch"><div class="chip" style="background:#1d2733"></div>글자색<div class="hex">#1d2733</div></div>
+        <div class="swatch"><div class="chip" style="background:#ef6a4c"></div>강조색<div class="hex">#ef6a4c</div></div>
+      </div>
+      <p class="label">카드 예시</p>
+      <div class="card">
+        <div class="card-top">
+          <span class="habit">운동</span>
+          <span class="streak">5일 연속</span>
+          <button class="btn-check">오늘 체크</button>
+        </div>
+        <div class="week"><span class="day on"></span><span class="day on"></span><span class="day on"></span><span class="day on"></span><span class="day on"></span><span class="day"></span><span class="day"></span></div>
+      </div>
+      <p class="label">버튼 예시</p>
+      <div class="buttons">
+        <button class="btn-main">+ 습관 추가</button>
+        <button class="btn-link">삭제</button>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

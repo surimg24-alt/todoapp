@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>습관 체크</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading">
+  <header class="top-bar">
+    <h1 class="app-name">습관 체크</h1>
+    <nav class="top-menu">
+      <button class="tab active" data-screen="today">오늘</button>
+      <button class="tab" data-screen="manage">습관 관리</button>
+      <button class="tab" data-screen="streak">기록</button>
+      <button class="tab" data-screen="settings">설정</button>
+    </nav>
+  </header>
+
+  <main class="content" aria-busy="true">
+    <!-- 로딩: 스켈레톤 -->
+    <div class="skeleton" aria-hidden="true">
+      <div class="sk sk-title"></div>
+      <div class="sk sk-sub"></div>
+      <div class="row sk-row"><div class="sk sk-name"></div><div class="sk sk-badge"></div><div class="sk sk-btn"></div></div>
+      <div class="row sk-row"><div class="sk sk-name"></div><div class="sk sk-badge"></div><div class="sk sk-btn"></div></div>
+      <div class="row sk-row"><div class="sk sk-name"></div><div class="sk sk-badge"></div><div class="sk sk-btn"></div></div>
+    </div>
+
+    <!-- 화면 1: 오늘 체크 -->
+    <section class="screen" id="today">
+      <h2>오늘의 습관</h2>
+      <p class="sub" id="today-summary"></p>
+      <p class="form-error" id="today-error" role="alert" hidden></p>
+      <ul class="habit-list" id="today-list"></ul>
+      <p class="hint" id="today-empty" hidden>등록된 습관이 없어요. "습관 관리"에서 추가해 보세요.</p>
+      <p class="hint">버튼을 누르면 오늘 한 것으로 표시돼요</p>
+    </section>
+
+    <!-- 화면 2: 습관 관리 -->
+    <section class="screen" id="manage" hidden>
+      <h2>습관 관리</h2>
+      <form class="add-row" id="add-form" novalidate>
+        <input class="input" id="habit-input" type="text" maxlength="30" autocomplete="off" placeholder="새 습관 이름 입력 (예: 물 마시기)" aria-label="새 습관 이름">
+        <button class="btn add" type="submit">+ 추가</button>
+      </form>
+      <p class="form-error" id="form-error" role="alert" hidden></p>
+      <p class="label" id="habit-count">등록된 습관 0개</p>
+      <ul class="habit-list" id="habit-list"></ul>
+      <p class="hint" id="empty-msg" hidden>아직 등록된 습관이 없어요. 위에서 추가해 보세요.</p>
+      <p class="hint">삭제 버튼을 누르면 "정말 지울까요?" 확인 후 지워져요</p>
+    </section>
+
+    <!-- 화면 3: 연속 기록 -->
+    <section class="screen" id="streak" hidden>
+      <h2>연속 기록</h2>
+      <div class="streak-list" id="streak-list"></div>
+      <p class="hint" id="streak-empty" hidden>등록된 습관이 없어요. "습관 관리"에서 추가해 보세요.</p>
+      <p class="hint">진한 칸 = 한 날, 밝은 칸 = 안 한 날 (이번 주 월~일)</p>
+    </section>
+
+    <!-- 화면 4: 설정 -->
+    <section class="screen" id="settings" hidden>
+      <h2>설정</h2>
+      <p class="hint">설정 항목은 준비 중이에요</p>
+    </section>
+  </main>
+
+  <nav class="bottom-tabs">
+    <button class="tab active" data-screen="today">오늘</button>
+    <button class="tab" data-screen="manage">습관 관리</button>
+    <button class="tab" data-screen="streak">기록</button>
+    <button class="tab" data-screen="settings">설정</button>
+  </nav>
+
+  <script src="app.js"></script>
+</body>
+</html>

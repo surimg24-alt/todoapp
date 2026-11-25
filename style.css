@@ -71,6 +71,17 @@ h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.11px; line-height: 1.
   border: 1px solid var(--accent);
   border-radius: var(--radius);
   white-space: nowrap;
+  transition: background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.streak.earned { background: var(--accent); }
+
+#today .sub { transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+#today.all-done .sub { color: var(--main); font-weight: 600; }
+#today .sub.celebrate { animation: settle 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+
+@keyframes settle {
+  from { transform: translateY(6px); }
+  to { transform: none; }
 }
 
 .btn {
@@ -84,8 +95,8 @@ h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.11px; line-height: 1.
 }
 .btn.done { background: var(--main); color: var(--bg); border: 1px solid var(--main); }
 .btn.light { color: var(--main); border: 1px solid var(--main); }
-.btn.small { background: var(--main); color: var(--bg); }
-.btn.small:hover { box-shadow: var(--shadow-main); }
+.btn.small { color: var(--text); border: 1px solid var(--line); font-weight: 500; }
+.btn.small:hover { color: var(--main); border-color: var(--main); }
 .btn.add { background: var(--main); color: var(--bg); padding: 12px 24px; font-size: 16px; letter-spacing: 0.16px; }
 .btn.add:hover { box-shadow: var(--shadow-main); }
 
@@ -142,11 +153,10 @@ h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.11px; line-height: 1.
 .tab:hover { color: var(--main); }
 .tab.active { color: var(--main); font-weight: 600; }
 
-/* 로딩 스켈레톤: 1초 보여 준 뒤 0.3초 동안 사라짐 */
-.skeleton { display: none; flex-direction: column; gap: 16px; transition: opacity 0.3s ease; }
+/* 로딩 스켈레톤: 글꼴을 실제로 불러오는 동안만 보임 */
+.skeleton { display: none; flex-direction: column; gap: 16px; }
 .loading .skeleton { display: flex; }
 .loading .screen { display: none; }
-.skeleton.fade-out { opacity: 0; }
 
 .sk {
   border-radius: var(--radius);
@@ -166,7 +176,8 @@ h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.11px; line-height: 1.
 }
 @media (prefers-reduced-motion: reduce) {
   .sk { animation: none; }
-  .skeleton { transition: none; }
+  #today .sub.celebrate { animation: none; }
+  .streak, #today .sub { transition: none; }
 }
 
 /* 넓은 화면(웹): 위쪽 메뉴 + 가운데 720px */

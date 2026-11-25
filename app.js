@@ -67,6 +67,7 @@ let habits = loadHabits();
 const CHECKS_KEY = "checks";
 const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
 
+const todaySection = document.getElementById("today");
 const todaySummary = document.getElementById("today-summary");
 const todayError = document.getElementById("today-error");
 const todayList = document.getElementById("today-list");
@@ -136,10 +137,13 @@ function getStreak(habitId, now) {
   return count;
 }
 
+// 0일이면 배지를 숨기고, 오늘 체크해서 이어진 기록은 채운 배지로 보여 줌
 function createStreakBadge(habitId, now) {
+  const count = getStreak(habitId, now);
+  if (count === 0) return null;
   const badge = document.createElement("span");
-  badge.className = "streak";
-  badge.textContent = `${getStreak(habitId, now)}일 연속`;
+  badge.className = isDoneOn(habitId, toDateKey(now)) ? "streak earned" : "streak";
+  badge.textContent = `${count}일 연속`;
   return badge;
 }
 
@@ -203,14 +207,29 @@ function createTodayRow(habit, todayKey) {
   checkButton.setAttribute("aria-pressed", String(done));
   checkButton.setAttribute("aria-label", `${habit.name} 오늘 체크`);
 
-  item.append(name, createStreakBadge(habit.id, new Date()), checkButton);
+  const badge = createStreakBadge(habit.id, new Date());
+  item.append(...[name, badge, checkButton].filter(Boolean));
   return item;
 }
+
+function isAllDoneToday() {
+  const todayKey = toDateKey(new Date());
+  return habits.length > 0 && habits.every((habit) => isDoneOn(habit.id, todayKey));
+}
+
+function celebrateSummary() {
+  todaySummary.classList.remove("celebrate");
+  void todaySummary.offsetWidth;
+  todaySummary.classList.add("celebrate");
+}
+
+todaySummary.addEventListener("animationend", () => todaySummary.classList.remove("celebrate"));
 
 function renderToday() {
   const now = new Date();
   const todayKey = toDateKey(now);
   const doneCount = habits.filter((habit) => isDoneOn(habit.id, todayKey)).length;
+  todaySection.classList.toggle("all-done", isAllDoneToday());
   todaySummary.textContent = `${formatDate(now)} · ${habits.length}개 중 ${doneCount}개 완료`;
   todayList.replaceChildren(...habits.map((habit) => createTodayRow(habit, todayKey)));
   todayEmpty.hidden = habits.length > 0;
@@ -231,8 +250,10 @@ function toggleToday(habitId) {
     return;
   }
   todayError.hidden = true;
+  const wasAllDone = isAllDoneToday();
   checks = nextChecks;
   renderToday();
+  if (!wasAllDone && isAllDoneToday()) celebrateSummary();
 }
 
 todayList.addEventListener("click", (event) => {
@@ -321,15 +342,15 @@ habitList.addEventListener("click", (event) => {
 
 renderHabits();
 
-const LOADING_MS = 1000;
-const FADE_MS = 300;
-const skeleton = document.querySelector(".skeleton");
+// 스켈레톤은 글꼴을 실제로 불러오는 동안만 보여 주고, 아무리 늦어도 1초 뒤에는 화면을 띄움
+const MAX_LOADING_MS = 1000;
 const main = document.querySelector(".content");
 
-setTimeout(() => {
-  skeleton.classList.add("fade-out");
-  setTimeout(() => {
-    document.body.classList.remove("loading");
-    main.setAttribute("aria-busy", "false");
-  }, FADE_MS);
-}, LOADING_MS);
+function finishLoading() {
+  document.body.classList.remove("loading");
+  main.setAttribute("aria-busy", "false");
+}
+
+const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
+const timeLimit = new Promise((resolve) => setTimeout(resolve, MAX_LOADING_MS));
+Promise.race([fontsReady, timeLimit]).then(finishLoading, finishLoading);
